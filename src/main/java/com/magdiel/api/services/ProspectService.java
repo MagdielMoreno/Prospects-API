@@ -22,7 +22,7 @@ public class ProspectService {
     @Autowired
     private DocumentRepo documentRepo;
 
-    private static final long MAX_FILE_SIZE = 10 * 1024 * 1024;
+    private static final long MAX_FILE_SIZE = 4 * 1024 * 1024;
 
     public Prospect add(Prospect prospect){
         return prospectRepo.save(prospect); 
@@ -77,7 +77,7 @@ public class ProspectService {
         }
 
         if (file.getSize() > MAX_FILE_SIZE) {
-            throw new IllegalArgumentException("File size must be less than 10MB.");
+            throw new IllegalArgumentException("File size must be less than 4MB.");
         }
 
         Prospect prospect = prospectRepo.findProspectById(prospectId);
