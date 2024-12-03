@@ -2,12 +2,15 @@ package com.magdiel.api.models;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -38,4 +41,19 @@ public class Prospect implements Serializable{
 
     @NotNull(message = "Status is required.")
     public int status;
+
+    @Size(max = 100, message = "Observations cannot be longer than 100 characters")
+    public String observations;
+
+    @Transient
+    private Boolean hasDocuments;
+
+    @JsonGetter("hasDocuments")
+    public Boolean getHasDocuments() {
+        return hasDocuments;
+    }
+
+    public void setHasDocuments(Boolean hasDocuments) {
+        this.hasDocuments = hasDocuments;
+    }
 }

@@ -47,17 +47,28 @@ public class ProspectService {
         prospectRepo.deleteById(id); 
     }
 
-    public Prospect find(Long id){ 
+    public Prospect find(Long id) { 
         Prospect prospect = prospectRepo.findProspectById(id);
         if (prospect == null) {
             throw new IllegalArgumentException("Prospect not found with id: " + id);
         }
+    
+        boolean hasDocuments = documentRepo.existsByProspectId(prospect.getId());
+        prospect.setHasDocuments(hasDocuments);
+    
         return prospect;
     }
-
+    
     @Transactional
-    public List<Prospect> findAll(){
-        return prospectRepo.findAll(Sort.by(Sort.Direction.DESC, "id"));
+    public List<Prospect> findAll() {
+        List<Prospect> prospects = prospectRepo.findAll(Sort.by(Sort.Direction.DESC, "id"));
+    
+        for (Prospect prospect : prospects) {
+            boolean hasDocuments = documentRepo.existsByProspectId(prospect.getId());
+            prospect.setHasDocuments(hasDocuments);
+        }
+    
+        return prospects;
     }
 
     public void uploadFile(Long prospectId, String name, MultipartFile file) throws IOException{

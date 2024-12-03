@@ -10,4 +10,5 @@ import com.magdiel.api.models.Document;
 @Repository
 public interface DocumentRepo extends JpaRepository<Document, Long>{
     List<Document> findByProspectId(Long prospectId);
+    boolean existsByProspectId(Long prospectId);
 }
