@@ -31,10 +31,15 @@ public class Document implements Serializable{
     @NotNull(message = "Document is required.")
     public byte[] document;
 
-    public Document(Long prospectId, String name, byte[] document) {
+    @NotNull(message = "Document Name is required.")
+    @Size(max = 100, message = "Document Name cannot be longer than 100 characters")
+    public String docName;
+
+    public Document(Long prospectId, String name, byte[] document, String docName) {
         this.prospectId = prospectId;
         this.name = name;
         this.document = document;
+        this.docName = docName;
     }
 
     public Document() { }

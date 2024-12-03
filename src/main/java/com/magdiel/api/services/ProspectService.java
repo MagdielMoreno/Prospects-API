@@ -71,7 +71,7 @@ public class ProspectService {
         return prospects;
     }
 
-    public void uploadFile(Long prospectId, String name, MultipartFile file) throws IOException{
+    public void uploadFile(Long prospectId, String name, MultipartFile file, String docName) throws IOException{
         if (file.isEmpty()) {
             throw new IllegalArgumentException("No file has been uploaded!");
         }
@@ -83,7 +83,7 @@ public class ProspectService {
         Prospect prospect = prospectRepo.findProspectById(prospectId);
 
         if (prospect != null) {
-            documentRepo.save(new Document(prospectId, name, file.getBytes()));
+            documentRepo.save(new Document(prospectId, name, file.getBytes(), docName));
         } else {
             throw new IllegalArgumentException("Prospect not found with id: " + prospectId);
         }
